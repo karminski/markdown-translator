@@ -29,7 +29,7 @@ class ConfigManager(IConfigManager):
     # Optional environment variables with defaults
     OPTIONAL_ENV_VARS = {
         'TRANSLATE_API': 'https://openrouter.ai/api/v1',
-        'TRANSLATE_MODEL': 'qwen/qwen-2.5-72b-instruct'
+        'TRANSLATE_MODEL': 'google/gemini-2.5-flash'
     }
     
     def __init__(self):
