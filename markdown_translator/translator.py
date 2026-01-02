@@ -73,16 +73,18 @@ class TranslationPool(ITranslator):
     - Error classification and recovery
     """
     
-    def __init__(self, concurrency: int = 5, api_client: Optional[OpenAI] = None, 
-                 validator: Optional[IValidator] = None, retry_strategy: Optional[RetryStrategy] = None,
+    def __init__(self, concurrency: int = 5, api_client: Optional[OpenAI] = None,
+                 model: Optional[str] = None, validator: Optional[IValidator] = None,
+                 retry_strategy: Optional[RetryStrategy] = None,
                  performance_monitor: Optional[PerformanceMonitor] = None,
                  security_manager: Optional[SecurityManager] = None):
         """
         Initialize the translation pool.
-        
+
         Args:
             concurrency: Maximum number of concurrent translation tasks
             api_client: Configured OpenAI client for API calls
+            model: Model name to use for translation (defaults to qwen/qwen-2.5-72b-instruct if None)
             validator: Content integrity validator
             retry_strategy: Retry configuration
             performance_monitor: Performance monitoring instance
@@ -90,6 +92,7 @@ class TranslationPool(ITranslator):
         """
         self.concurrency = concurrency
         self.api_client = api_client
+        self.model = model
         self.validator = validator
         self.retry_strategy = retry_strategy or RetryStrategy()
         self.performance_monitor = performance_monitor
@@ -396,7 +399,7 @@ class TranslationPool(ITranslator):
         """
         try:
             response = self.api_client.chat.completions.create(
-                model="qwen/qwen-2.5-72b-instruct",  # Default model
+                model=self.model or "qwen/qwen-2.5-72b-instruct",  # Default model
                 messages=[
                     {
                         "role": "user",
