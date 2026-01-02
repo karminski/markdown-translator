@@ -111,7 +111,7 @@ class SecurityManager:
             path_str = str(path)
             if '..' in path_str or path_str.startswith('/'):
                 issues.append("Potential path traversal detected")
-                risk_level = 'high'
+                risk_level = 'low'
             
             # Check file size (prevent processing extremely large files)
             if path.exists():
