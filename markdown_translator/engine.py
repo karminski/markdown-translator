@@ -93,7 +93,6 @@ class TranslationEngine:
             self.translator = TranslationPool(
                 concurrency=5,
                 api_client=api_client,
-                model=self.config_manager.get_model_name(),
                 validator=self.validator,
                 performance_monitor=self.performance_monitor,
                 security_manager=self.security_manager
@@ -586,7 +585,6 @@ def create_translation_engine(chunk_size: int = 500,
     translator = TranslationPool(
         concurrency=concurrency,
         api_client=api_client,
-        model=config_manager.get_model_name(),
         validator=validator,
         performance_monitor=performance_monitor,
         security_manager=security_manager
